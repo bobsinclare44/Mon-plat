@@ -3,380 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mon Restaurant - Commande en ligne</title>
+<title>La Formule Choice - Notre Carte</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-  
-  body {
-    background: #f5f5f5;
-    color: #333;
-    min-height: 100vh;
-  }
-
-  header {
-    background: #e63946;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-
-  header h1 { font-size: 2rem; margin-bottom: 5px; }
-  header p { opacity: 0.9; font-size: 0.95rem; }
-
-  .container {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 15px;
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 20px;
-  }
-
-  .categories {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-
-  .categories button {
-    padding: 8px 18px;
-    border: 2px solid #e63946;
-    background: white;
-    color: #e63946;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-  }
-
-  .categories button.active,
-  .categories button:hover {
-    background: #e63946;
-    color: white;
-  }
-
-  .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
-  }
-
-  .card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  }
-
-  .card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    background: #ddd;
-  }
-
-  .card-body { padding: 12px; }
-  .card-body h3 { font-size: 1.05rem; margin-bottom: 5px; }
-  .card-body p { font-size: 0.85rem; color: #666; margin-bottom: 10px; }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .price { font-weight: bold; color: #e63946; font-size: 1.1rem; }
-
-  .add-btn {
-    background: #e63946;
-    color: white;
-    border: none;
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: 0.2s;
-  }
-
-  .add-btn:hover { background: #c92d3a; transform: scale(1.1); }
-
-  /* Panier */
-  .cart {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-  }
-
-  .cart h2 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-  }
-
-  .cart-empty { color: #999; text-align: center; padding: 20px 0; font-style: italic; }
-
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.9rem;
-  }
-
-  .cart-item-info { flex: 1; }
-  .cart-item-info small { color: #999; }
-
-  .qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .qty-controls button {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    border: 1px solid #e63946;
-    background: white;
-    color: #e63946;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  .qty-controls button:hover { background: #e63946; color: white; }
-  .qty-controls span { min-width: 18px; text-align: center; }
-
-  .cart-total {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 2px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-
-  .checkout-btn {
-    width: 100%;
-    margin-top: 15px;
-    padding: 12px;
-    background: #2a9d8f;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .checkout-btn:hover { background: #21867a; }
-
-  /* Modal */
-  .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-  }
-
-  .modal.show { display: flex; }
-
-  .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-  }
-
-  .modal-content h2 { color: #2a9d8f; margin-bottom: 15px; }
-  .modal-content p { margin-bottom: 20px; color: #555; }
-  .modal-content button {
-    padding: 10px 25px;
-    background: #e63946;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  @media (max-width: 800px) {
-    .container { grid-template-columns: 1fr; }
-    .cart { position: static; }
+  body { background: #faf7f2; color: #2b2b2b; line-height: 1.5; }
+  header { background: linear-gradient(135deg, #1e1e1e, #3a3a3a); color: white; padding: 50px 20px; text-align: center; }
+  header h1 { font-size: 2.3rem; letter-spacing: 2px; margin-bottom: 10px; }
+  header p { opacity: 0.85; font-size: 1rem; font-style: italic; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+  .nav-cats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; position: sticky; top: 0; background: #faf7f2; padding: 15px 0; z-index: 10; border-bottom: 1px solid #eee; }
+  .nav-cats a { text-decoration: none; color: #555; padding: 8px 18px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; border: 1px solid transparent; }
+  .nav-cats a:hover { background: #1e1e1e; color: white; }
+  .categorie { margin-bottom: 50px; }
+  .categorie h2 { font-size: 1.6rem; margin-bottom: 25px; color: #1e1e1e; padding-bottom: 10px; border-bottom: 2px solid #d4a574; display: inline-block; }
+  .plat { display: flex; gap: 18px; padding: 18px 0; border-bottom: 1px dashed #e0d5c5; align-items: center; }
+  .plat img { width: 90px; height: 90px; object-fit: cover; border-radius: 10px; flex-shrink: 0; background: #eee; }
+  .plat-info { flex: 1; }
+  .plat-info h3 { font-size: 1.15rem; margin-bottom: 4px; color: #1e1e1e; }
+  .plat-info p { font-size: 0.9rem; color: #777; }
+  .plat-prix { font-size: 1.2rem; font-weight: bold; color: #d4a574; white-space: nowrap; }
+  footer { text-align: center; padding: 40px 20px; color: #999; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 30px; }
+  @media (max-width: 500px) {
+    header h1 { font-size: 1.8rem; }
+    .plat img { width: 70px; height: 70px; }
+    .plat-info h3 { font-size: 1rem; }
+    .plat-prix { font-size: 1rem; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🍔 Mon Restaurant</h1>
-  <p>Commandez vos plats préférés en ligne</p>
+  <h1>LA FORMULE CHOICE</h1>
+  <p>~ Notre Carte ~</p>
 </header>
 
-<div class="container">
-  <div>
-    <div class="categories" id="categories"></div>
-    <div class="menu-grid" id="menu"></div>
-  </div>
-
-  <div class="cart">
-    <h2>🛒 Votre panier</h2>
-    <div id="cart-items">
-      <p class="cart-empty">Votre panier est vide</p>
-    </div>
-    <div class="cart-total" id="cart-total" style="display:none;">
-      <span>Total</span>
-      <span id="total-amount">0.00 €</span>
-    </div>
-    <button class="checkout-btn" id="checkout" style="display:none;">Commander</button>
-  </div>
-</div>
-
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <h2>✅ Commande confirmée !</h2>
-    <p>Merci pour votre commande. Vous recevrez bientôt votre repas.</p>
-    <button onclick="closeModal()">Fermer</button>
-  </div>
-</div>
+<div class="nav-cats" id="nav"></div>
+<div class="container" id="carte"></div>
+<footer>© 2025 La Formule Choice — Tous droits réservés</footer>
 
 <script>
-  // === MENU DES PLATS ===
   const menu = [
-    { id: 1, nom: "s@atic marocain", desc: "cali fruit rouge", prix: 15.00g, cat: "Burgers", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" },
-    { id: 2, nom: "rs11", desc: "Double steak, double cheddar", prix: 12.00, cat: "Burgers", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400" },
-    { id: 3, nom: "Pizza Margherita", desc: "Tomate, mozzarella, basilic", prix: 10.50, cat: "Pizzas", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400" },
-    { id: 4, nom: "Pizza 4 Fromages", desc: "Mozza, chèvre, gorgonzola, emmental", prix: 13.00, cat: "Pizzas", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400" },
-    { id: 5, nom: "Frites Maison", desc: "Frites fraîches croustillantes", prix: 3.50, cat: "Accompagnements", img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400" },
-    { id: 6, nom: "Salade César", desc: "Poulet, parmesan, croûtons", prix: 8.00, cat: "Salades", img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400" },
-    { id: 7, nom: "Coca-Cola", desc: "33cl bien frais", prix: 2.50, cat: "Boissons", img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400" },
-    { id: 8, nom: "Tiramisu", desc: "Dessert italien traditionnel", prix: 5.50, cat: "Desserts", img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400" },
+    {
+      categorie: "Entrées",
+      plats: [
+        { nom: "Salade César", desc: "Poulet grillé, parmesan, croûtons", prix: 8.00, img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=200" },
+        { nom: "Soupe à l'oignon", desc: "Recette traditionnelle gratinée", prix: 6.50, img: "https://images.unsplash.com/photo-1547592180-85f173990554?w=200" }
+      ]
+    },
+    {
+      categorie: "Burgers",
+      plats: [
+        { nom: "Burger Classique", desc: "Bœuf, cheddar, salade, tomate", prix: 9.50, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" },
+        { nom: "Double Cheese", desc: "Double steak, double cheddar", prix: 12.00, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=200" }
+      ]
+    },
+    {
+      categorie: "Pizzas",
+      plats: [
+        { nom: "Margherita", desc: "Tomate, mozzarella, basilic", prix: 10.50, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200" },
+        { nom: "4 Fromages", desc: "Mozza, chèvre, gorgonzola, emmental", prix: 13.00, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200" }
+      ]
+    },
+    {
+      categorie: "Boissons",
+      plats: [
+        { nom: "Coca-Cola", desc: "33 cl bien frais", prix: 2.50, img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=200" },
+        { nom: "Café", desc: "Expresso ou allongé", prix: 2.00, img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200" }
+      ]
+    },
+    {
+      categorie: "Desserts",
+      plats: [
+        { nom: "Tiramisu", desc: "Recette italienne traditionnelle", prix: 5.50, img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=200" }
+      ]
+    }
   ];
 
-  let panier = [];
-  let categorieActive = "Tous";
-
-  // === AFFICHAGE DES CATÉGORIES ===
-  function afficherCategories() {
-    const cats = ["Tous", ...new Set(menu.map(p => p.cat))];
-    const container = document.getElementById("categories");
-    container.innerHTML = cats.map(c => 
-      `<button class="${c === categorieActive ? 'active' : ''}" onclick="filtrer('${c}')">${c}</button>`
-    ).join("");
-  }
-
-  function filtrer(cat) {
-    categorieActive = cat;
-    afficherCategories();
-    afficherMenu();
-  }
-
-  // === AFFICHAGE DU MENU ===
-  function afficherMenu() {
-    const filtered = categorieActive === "Tous" 
-      ? menu 
-      : menu.filter(p => p.cat === categorieActive);
-    
-    document.getElementById("menu").innerHTML = filtered.map(p => `
-      <div class="card">
-        <img src="${p.img}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/400x300?text=${encodeURIComponent(p.nom)}'">
-        <div class="card-body">
-          <h3>${p.nom}</h3>
-          <p>${p.desc}</p>
-          <div class="card-footer">
-            <span class="price">${p.prix.toFixed(2)} €</span>
-            <button class="add-btn" onclick="ajouter(${p.id})">+</button>
+  const nav = document.getElementById("nav");
+  const carte = document.getElementById("carte");
+  nav.innerHTML = menu.map((cat, i) => `<a href="#cat-${i}">${cat.categorie}</a>`).join("");
+  carte.innerHTML = menu.map((cat, i) => `
+    <section class="categorie" id="cat-${i}">
+      <h2>${cat.categorie}</h2>
+      ${cat.plats.map(p => `
+        <div class="plat">
+          <img src="${p.img}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/200?text=?'">
+          <div class="plat-info">
+            <h3>${p.nom}</h3>
+            <p>${p.desc}</p>
           </div>
+          <div class="plat-prix">${p.prix.toFixed(2)} €</div>
         </div>
-      </div>
-    `).join("");
-  }
-
-  // === GESTION DU PANIER ===
-  function ajouter(id) {
-    const item = panier.find(i => i.id === id);
-    if (item) item.qte++;
-    else {
-      const plat = menu.find(p => p.id === id);
-      panier.push({ ...plat, qte: 1 });
-    }
-    afficherPanier();
-  }
-
-  function modifierQte(id, delta) {
-    const item = panier.find(i => i.id === id);
-    if (!item) return;
-    item.qte += delta;
-    if (item.qte <= 0) panier = panier.filter(i => i.id !== id);
-    afficherPanier();
-  }
-
-  function afficherPanier() {
-    const container = document.getElementById("cart-items");
-    const totalDiv = document.getElementById("cart-total");
-    const checkoutBtn = document.getElementById("checkout");
-
-    if (panier.length === 0) {
-      container.innerHTML = '<p class="cart-empty">Votre panier est vide</p>';
-      totalDiv.style.display = "none";
-      checkoutBtn.style.display = "none";
-      return;
-    }
-
-    container.innerHTML = panier.map(i => `
-      <div class="cart-item">
-        <div class="cart-item-info">
-          ${i.nom}<br>
-          <small>${(i.prix * i.qte).toFixed(2)} €</small>
-        </div>
-        <div class="qty-controls">
-          <button onclick="modifierQte(${i.id}, -1)">−</button>
-          <span>${i.qte}</span>
-          <button onclick="modifierQte(${i.id}, 1)">+</button>
-        </div>
-      </div>
-    `).join("");
-
-    const total = panier.reduce((s, i) => s + i.prix * i.qte, 0);
-    document.getElementById("total-amount").textContent = total.toFixed(2) + " €";
-    totalDiv.style.display = "flex";
-    checkoutBtn.style.display = "block";
-  }
-
-  // === COMMANDE ===
-  document.getElementById("checkout").addEventListener("click", () => {
-    document.getElementById("modal").classList.add("show");
-    panier = [];
-    afficherPanier();
-  });
-
-  function closeModal() {
-    document.getElementById("modal").classList.remove("show");
-  }
-
-  // === INITIALISATION ===
-  afficherCategories();
-  afficherMenu();
-  afficherPanier();
+      `).join("")}
+    </section>
+  `).join("");
 </script>
 
 </body>
