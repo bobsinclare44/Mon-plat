@@ -1,104 +1,342 @@
+Parfait, très bonne idée ! 👍 Je te refais tout avec :
+
+1. Vue initiale épurée : juste photo + nom + prix
+2. Clic sur un plat → une fenêtre s'ouvre avec tous les détails (ingrédients, description complète)
+3. Images super simples à gérer : une ligne claire avec img: — si tu mets "" (vide), un placeholder automatique s'affiche
+4. Instruction en commentaire juste à côté pour te rappeler comment faire
+
+Voici le code complet :
+
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Formule Choice - Notre Carte</title>
+<title>La Formule Choice</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-  body { background: #faf7f2; color: #2b2b2b; line-height: 1.5; }
-  header { background: linear-gradient(135deg, #1e1e1e, #3a3a3a); color: white; padding: 50px 20px; text-align: center; }
-  header h1 { font-size: 2.3rem; letter-spacing: 2px; margin-bottom: 10px; }
-  header p { opacity: 0.85; font-size: 1rem; font-style: italic; }
-  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-  .nav-cats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; position: sticky; top: 0; background: #faf7f2; padding: 15px 0; z-index: 10; border-bottom: 1px solid #eee; }
-  .nav-cats a { text-decoration: none; color: #555; padding: 8px 18px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; border: 1px solid transparent; }
-  .nav-cats a:hover { background: #1e1e1e; color: white; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', 'Segoe UI', sans-serif; }
+  body { background: #05060a; color: #e0e0e0; line-height: 1.5; }
+
+  header { padding: 60px 20px 40px; text-align: center; }
+  header h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; line-height: 1.1; }
+  header h1 .cyan { color: #00f0ff; text-shadow: 0 0 20px #00f0ff88; }
+  header h1 .pink { color: #ff2bd6; text-shadow: 0 0 20px #ff2bd688; }
+  header p { margin-top: 15px; font-size: 0.9rem; letter-spacing: 2px; color: #888; text-transform: uppercase; }
+
+  .nav-cats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 20px auto 40px; max-width: 900px; padding: 0 15px; }
+  .nav-cats a { text-decoration: none; color: #ccc; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border: 1px solid #00f0ff44; transition: 0.3s; background: #0a0e17; }
+  .nav-cats a:hover { background: linear-gradient(90deg, #00f0ff, #ff2bd6); color: #000; border-color: transparent; box-shadow: 0 0 20px #00f0ff88; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+
   .categorie { margin-bottom: 50px; }
-  .categorie h2 { font-size: 1.6rem; margin-bottom: 25px; color: #1e1e1e; padding-bottom: 10px; border-bottom: 2px solid #d4a574; display: inline-block; }
-  .plat { display: flex; gap: 18px; padding: 18px 0; border-bottom: 1px dashed #e0d5c5; align-items: center; }
-  .plat img { width: 90px; height: 90px; object-fit: cover; border-radius: 10px; flex-shrink: 0; background: #eee; }
-  .plat-info { flex: 1; }
-  .plat-info h3 { font-size: 1.15rem; margin-bottom: 4px; color: #1e1e1e; }
-  .plat-info p { font-size: 0.9rem; color: #777; }
-  .plat-prix { font-size: 1.2rem; font-weight: bold; color: #d4a574; white-space: nowrap; }
-  footer { text-align: center; padding: 40px 20px; color: #999; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 30px; }
+  .categorie h2 { font-size: 1.8rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+  .categorie h2::before { content: ""; width: 40px; height: 3px; background: linear-gradient(90deg, #00f0ff, #ff2bd6); border-radius: 2px; }
+  .categorie h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, #ff2bd6, transparent); }
+
+  .plats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+  .plat { background: #0a0e17; border: 1px solid #00f0ff55; border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+  .plat:hover { border-color: #ff2bd6; box-shadow: 0 0 25px #ff2bd644; transform: translateY(-3px); }
+  .plat img { width: 100%; height: 160px; object-fit: cover; background: #111; display: block; }
+  .plat-body { padding: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .plat-body h3 { font-size: 0.95rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #fff; }
+  .plat-prix { font-size: 1.1rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 10px #00f0ff88; white-space: nowrap; }
+
+  /* ===== FENÊTRE DÉTAILS ===== */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: flex-end; z-index: 100; }
+  .modal.show { display: flex; }
+  .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-content img { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-body { padding: 25px; }
+  .modal-body h2 { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
+  .modal-body .modal-prix { font-size: 1.5rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 15px #00f0ff88; margin-bottom: 20px; }
+  .modal-body .label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #ff2bd6; margin-bottom: 8px; font-weight: 700; }
+  .modal-body .desc { font-size: 0.95rem; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
+  .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; backdrop-filter: blur(10px); }
+  .modal-wrapper { position: relative; }
+
+  footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; border-top: 1px solid #ff2bd622; }
+
   @media (max-width: 500px) {
-    header h1 { font-size: 1.8rem; }
-    .plat img { width: 70px; height: 70px; }
-    .plat-info h3 { font-size: 1rem; }
-    .plat-prix { font-size: 1rem; }
+    header h1 { font-size: 1.9rem; }
+    .categorie h2 { font-size: 1.3rem; }
+    .plats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .plat img { height: 120px; }
+    .plat-body { padding: 10px; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .plat-body h3 { font-size: 0.75rem; }
+    .plat-prix { font-size: 0.9rem; }
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-  <h1>LA FORMULE CHOICE</h1>
+  <h1><span class="cyan">LA FORMULE</span><br><span class="pink">CHOICE</span></h1>
   <p>~ Notre Carte ~</p>
 </header>
 
 <div class="nav-cats" id="nav"></div>
 <div class="container" id="carte"></div>
-<footer>© 2025 La Formule Choice — Tous droits réservés</footer>
+<footer>© 2025 La Formule Choice</footer>
+
+<!-- Fenêtre détails -->
+<div class="modal" id="modal">
+  <div class="modal-wrapper" style="width:100%;display:flex;justify-content:center;">
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="">
+      <button class="modal-close" onclick="fermerModal()">✕</button>
+      <div class="modal-body">
+        <h2 id="modal-nom"></h2>
+        <div class="modal-prix" id="modal-prix"></div>
+        <div class="label">Description</div>
+        <div class="desc" id="modal-desc"></div>
+        <div class="label">Composition</div>
+        <div class="desc" id="modal-compo"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
+  /* ============================================================
+     👇👇👇  C'EST ICI QUE TU MODIFIES TA CARTE  👇👇👇
+     
+     POUR CHAQUE PLAT, TU AS 5 CHOSES À REMPLIR :
+     
+     nom    : le nom du plat
+     desc   : la description courte (visible dans la fenêtre détails)
+     compo  : la composition / ingrédients (visible dans la fenêtre détails)
+     prix   : le prix en chiffres (ex: 9.50) - PAS de "€"
+     img    : le lien de ta photo
+              → Si tu n'as PAS de photo, laisse juste "" (vide)
+              → Un placeholder s'affichera automatiquement
+     
+     ⚠️ Ne touche à RIEN d'autre (gardes les { } " " , :)
+     ============================================================ */
+
   const menu = [
     {
       categorie: "Entrées",
       plats: [
-        { nom: "Salade César", desc: "Poulet grillé, parmesan, croûtons", prix: 8.00, img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=200" },
-        { nom: "Soupe à l'oignon", desc: "Recette traditionnelle gratinée", prix: 6.50, img: "https://images.unsplash.com/photo-1547592180-85f173990554?w=200" }
+        {
+          nom: "Salade César",
+          desc: "Une salade fraîche et gourmande, parfaite en entrée.",
+          compo: "Salade romaine, poulet grillé, parmesan, croûtons, sauce César maison.",
+          prix: 8.00,
+          img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600"
+        },
+        {
+          nom: "Soupe à l'oignon",
+          desc: "Recette traditionnelle française, gratinée au four.",
+          compo: "Oignons, bouillon maison, pain, gruyère gratiné.",
+          prix: 6.50,
+          img: ""
+        }
       ]
     },
     {
       categorie: "Burgers",
       plats: [
-        { nom: "Burger Classique", desc: "Bœuf, cheddar, salade, tomate", prix: 9.50, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" },
-        { nom: "Double Cheese", desc: "Double steak, double cheddar", prix: 12.00, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=200" }
+        {
+          nom: "Neon Burger",
+          desc: "Notre burger signature, généreux et savoureux.",
+          compo: "Pain brioché, steak haché 150g, cheddar fondant, salade, oignons rouges, sauce signature.",
+          prix: 14.00,
+          img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+        },
+        {
+          nom: "Cyber Chicken",
+          desc: "Pour les amateurs de poulet croustillant.",
+          compo: "Pain brioché, filet de poulet pané, cheddar, sauce épicée, salade.",
+          prix: 12.00,
+          img: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600"
+        },
+        {
+          nom: "Double Tech",
+          desc: "Le double burger ultime pour les grandes faims.",
+          compo: "Pain brioché, 2 steaks, double cheddar, bacon, sauce BBQ.",
+          prix: 16.00,
+          img: ""
+        }
       ]
     },
     {
-      categorie: "Pizzas",
+      categorie: "Tacos",
       plats: [
-        { nom: "Margherita", desc: "Tomate, mozzarella, basilic", prix: 10.50, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200" },
-        { nom: "4 Fromages", desc: "Mozza, chèvre, gorgonzola, emmental", prix: 13.00, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200" }
+        {
+          nom: "Taco Classic",
+          desc: "Le tacos à la française, simple et efficace.",
+          compo: "Galette, viande hachée, frites, cheddar, sauce maison.",
+          prix: 10.00,
+          img: ""
+        },
+        {
+          nom: "Taco Chicken",
+          desc: "Version poulet mariné, légèrement épicée.",
+          compo: "Galette, poulet mariné, crudités, frites, sauce épicée.",
+          prix: 11.00,
+          img: ""
+        }
       ]
     },
     {
-      categorie: "Boissons",
+      categorie: "Bowls",
       plats: [
-        { nom: "Coca-Cola", desc: "33 cl bien frais", prix: 2.50, img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=200" },
-        { nom: "Café", desc: "Expresso ou allongé", prix: 2.00, img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200" }
+        {
+          nom: "Poke Bowl",
+          desc: "Frais, équilibré et coloré.",
+          compo: "Riz, saumon frais, avocat, edamame, concombre, sauce soja.",
+          prix: 13.00,
+          img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600"
+        },
+        {
+          nom: "Chicken Bowl",
+          desc: "Le bowl réconfortant au poulet.",
+          compo: "Quinoa, poulet grillé, légumes de saison, sauce teriyaki.",
+          prix: 12.00,
+          img: ""
+        }
+      ]
+    },
+    {
+      categorie: "Drinks",
+      plats: [
+        {
+          nom: "Coca-Cola",
+          desc: "33 cl bien frais.",
+          compo: "Coca-Cola original, servi avec glaçons.",
+          prix: 2.50,
+          img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600"
+        },
+        {
+          nom: "Café",
+          desc: "Expresso ou allongé.",
+          compo: "Café 100% arabica, torréfaction artisanale.",
+          prix: 2.00,
+          img: ""
+        }
       ]
     },
     {
       categorie: "Desserts",
       plats: [
-        { nom: "Tiramisu", desc: "Recette italienne traditionnelle", prix: 5.50, img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=200" }
+        {
+          nom: "Tiramisu",
+          desc: "Le dessert italien incontournable.",
+          compo: "Mascarpone, biscuits, café, cacao.",
+          prix: 5.50,
+          img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600"
+        }
       ]
     }
   ];
 
+  /* ============================================================
+     ⛔ NE TOUCHE PAS EN DESSOUS (c'est le code qui fait marcher)
+     ============================================================ */
+
+  const PLACEHOLDER = "https://placehold.co/600x400/0a0e17/00f0ff?text=Photo+%C3%A0+venir";
+
   const nav = document.getElementById("nav");
   const carte = document.getElementById("carte");
+
   nav.innerHTML = menu.map((cat, i) => `<a href="#cat-${i}">${cat.categorie}</a>`).join("");
+
   carte.innerHTML = menu.map((cat, i) => `
     <section class="categorie" id="cat-${i}">
       <h2>${cat.categorie}</h2>
-      ${cat.plats.map(p => `
-        <div class="plat">
-          <img src="${p.img}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/200?text=?'">
-          <div class="plat-info">
-            <h3>${p.nom}</h3>
-            <p>${p.desc}</p>
+      <div class="plats-grid">
+        ${cat.plats.map((p, j) => `
+          <div class="plat" onclick="ouvrirModal(${i},${j})">
+            <img src="${p.img || PLACEHOLDER}" alt="${p.nom}">
+            <div class="plat-body">
+              <h3>${p.nom}</h3>
+              <div class="plat-prix">${p.prix.toFixed(2)} €</div>
+            </div>
           </div>
-          <div class="plat-prix">${p.prix.toFixed(2)} €</div>
-        </div>
-      `).join("")}
+        `).join("")}
+      </div>
     </section>
   `).join("");
+
+  function ouvrirModal(i, j) {
+    const p = menu[i].plats[j];
+    document.getElementById("modal-img").src = p.img || PLACEHOLDER;
+    document.getElementById("modal-nom").textContent = p.nom;
+    document.getElementById("modal-prix").textContent = p.prix.toFixed(2) + " €";
+    document.getElementById("modal-desc").textContent = p.desc;
+    document.getElementById("modal-compo").textContent = p.compo;
+    document.getElementById("modal").classList.add("show");
+  }
+
+  function fermerModal() {
+    document.getElementById("modal").classList.remove("show");
+  }
+
+  // Fermer en cliquant en dehors
+  document.getElementById("modal").addEventListener("click", (e) => {
+    if (e.target.id === "modal") fermerModal();
+  });
 </script>
 
 </body>
 </html>
+```
+
+---
+
+🎯 Ce qui change
+
+Avant Maintenant
+Nom + description + prix visibles Nom + prix seulement
+Pas de détails Clic sur le plat → fenêtre qui monte du bas avec photo, description, composition
+Image obligatoire Si pas d'image → placeholder automatique "Photo à venir"
+
+---
+
+📝 Comment ajouter tes images (ultra simple)
+
+Dans le code, chaque plat ressemble à ça :
+
+```js
+{
+  nom: "Neon Burger",
+  desc: "Notre burger signature, généreux et savoureux.",
+  compo: "Pain brioché, steak haché 150g, cheddar fondant...",
+  prix: 14.00,
+  img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+}
+```
+
+👉 Pour ajouter ta photo : remplace juste le lien après img: par le tien.
+
+👉 Pas de photo ? Laisse img: "" (vide) → un placeholder cyan s'affiche automatiquement ✨
+
+---
+
+🖼️ Comment héberger tes propres photos
+
+Le plus simple : sur ton propre GitHub
+
+1. Va sur github.com → dépôt Mon-plat
+2. "Add file" → "Upload files"
+3. Choisis tes photos depuis ta pellicule
+4. "Commit changes"
+5. Clique sur une photo uploadée → bouton "Download" → appui long → Copier le lien
+6. Modifie l'URL en remplaçant github.com/.../blob/... par raw.githubusercontent.com/...
+
+Ou plus simple : upload sur imgur.com → copie le lien direct → colle dans img:
+
+---
+
+❓ Dis-moi
+
+1. Est-ce que ce système te convient ? (clic → détails)
+2. Le placeholder automatique te plaît ou tu veux autre chose ?
+3. Tu veux modifier quoi d'autre maintenant ? (titres, couleurs, ajouter tes vrais plats...)
+
+Une fois validé, on met tes vrais plats un par un, tranquille 🎨
