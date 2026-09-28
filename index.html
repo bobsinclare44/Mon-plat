@@ -106,115 +106,53 @@
               → Un placeholder s'affichera automatiquement
      
      ⚠️ Ne touche à RIEN d'autre (gardes les { } " " , :)
+     ⚠️ Ne JAMAIS sauter de ligne à l'intérieur d'un texte entre " "
      ============================================================ */
 
   const menu = [
     {
-      categorie: "soft",
+      categorie: "Soft",
       plats: [
         {
-          nom: "o.g kvsh",
-          desc: "natturel et vegetale epice floral et tereuse 4/10 ",
-          compo: "og kvsh moroco",
+          nom: "O.G Kvsh",
+          desc: "Naturel et végétal, épicé floral et terreux 4/10",
+          compo: "OG Kush Maroc",
           prix: 6.00,
           img: "https://zupimages.net/up/26/39/k2nx.jpeg"
         },
         {
-          nom: "3x royal gorilla",
-          desc: "gouttue et impactant 7/10 ",
-          compo: "",
+          nom: "3x Royal Gorilla",
+          desc: "Goûtue et impactante 7/10",
+          compo: "Royal Gorilla",
           prix: 10.00,
           img: ""
-        }
-      ]
-    },
-    { finale propre, légèrement poivrée, avec une touche de baies foncées.",
+        },
+        {
+          nom: "RS11 x Pinata",
+          desc: "Finale propre, légèrement poivrée, avec une touche de baies foncées.",
+          compo: "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa, floraison 9 semaines",
           prix: 15.00,
           img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
         },
         {
-          nom: "amnesia haze",
-          desc: "Pour les amateurs de fleure un gout universelle et familier ",
-          compo: "acidulé un bon gout floral ",
-          prix: 10.00,
+          nom: "Amnesia Haze",
+          desc: "Pour les amateurs de fleur, un goût universel et familier.",
+          compo: "Acidulé, bon goût floral",
+          prix(": 10.00,
           img: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600"
-        },
-        {
-          nom: "rs11 x pinata",
-          desc: "Le double burger ultime pour les grandes faims.",
-          compo: "La RS11 résulte du croisement entre la variété Pink Guava et la génétique OZK. Ce mariage génétique donne naissance à une plante principalement Indica, 
-           avec 70% de gènes Indica et 30% Sativa. La RS11 présente une période de floraison en intérieur d'environ 9 semaines",
-          prix: 15,
-          img: ""
         }
       ]
     },
     {
-      categorie: "hard",
+      categorie: "Hard",
       plats: [
         {
-          nom: "static marocain x2",
-          desc: "",
-          compo: "Galette, viande hachée, frites, cheddar, sauce maison.",
-          prix: 10.00,
+          nom: "Static Marocnavain x2",
+          desc:");
+ "Static marocain, qualité sup érieure.",
+          compo: "Static Mar constocain x2",
+          prix:  carte10.00,
           img: ""
-        },
-        {
-          nom: "Taco Chicken",
-          desc: "Version poulet mariné, légèrement épicée.",
-          compo: "Galette, poulet mariné, crudités, frites, sauce épicée.",
-          prix: 11.00,
-          img: ""
-        }
-      ]
-    },
-    {
-      categorie: "Bowls",
-      plats: [
-        {
-          nom: "Poke Bowl",
-          desc: "Frais, équilibré et coloré.",
-          compo: "Riz, saumon frais, avocat, edamame, concombre, sauce soja.",
-          prix: 13.00,
-          img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600"
-        },
-        {
-          nom: "Chicken Bowl",
-          desc: "Le bowl réconfortant au poulet.",
-          compo: "Quinoa, poulet grillé, légumes de saison, sauce teriyaki.",
-          prix: 12.00,
-          img: ""
-        }
-      ]
-    },
-    {
-      categorie: "Drinks",
-      plats: [
-        {
-          nom: "Coca-Cola",
-          desc: "33 cl bien frais.",
-          compo: "Coca-Cola original, servi avec glaçons.",
-          prix: 2.50,
-          img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600"
-        },
-        {
-          nom: "Café",
-          desc: "Expresso ou allongé.",
-          compo: "Café 100% arabica, torréfaction artisanale.",
-          prix: 2.00,
-          img: ""
-        }
-      ]
-    },
-    {
-      categorie: "Desserts",
-      plats: [
-        {
-          nom: "Tiramisu",
-          desc: "Le dessert italien incontournable.",
-          compo: "Mascarpone, biscuits, café, cacao.",
-          prix: 5.50,
-          img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600"
         }
       ]
     }
@@ -226,8 +164,7 @@
 
   const PLACEHOLDER = "https://placehold.co/600x400/0a0e17/00f0ff?text=Photo+%C3%A0+venir";
 
-  const nav = document.getElementById("nav");
-  const carte = document.getElementById("carte");
+  const nav = document.getElementById = document.getElementById("carte");
 
   nav.innerHTML = menu.map((cat, i) => `<a href="#cat-${i}">${cat.categorie}</a>`).join("");
 
@@ -262,7 +199,6 @@
     document.getElementById("modal").classList.remove("show");
   }
 
-  // Fermer en cliquant en dehors
   document.getElementById("modal").addEventListener("click", (e) => {
     if (e.target.id === "modal") fermerModal();
   });
