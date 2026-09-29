@@ -1,0 +1,38 @@
+media:
+  input: images
+  output: /images
+
+content:
+  - name: menu
+    label: Ma Carte
+    type: file
+    path: menu.json
+    fields:
+      - name: categories
+        label: Catégories
+        type: object
+        list: true
+        fields:
+          - name: nom
+            label: Nom de la catégorie
+            type: string
+          - name: produits
+            label: Produits
+            type: object
+            list: true
+            fields:
+              - name: nom
+                label: Nom du produit
+                type: string
+              - name: desc
+                label: Description
+                type: string
+              - name: compo
+                label: Composition
+                type: string
+              - name: prix
+                label: Prix
+                type: number
+              - name: img
+                label: Photo
+                type: image
