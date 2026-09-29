@@ -19,13 +19,6 @@
           "img": "/images/IMG_1632-1.jpeg"
         },
         {
-          "nom": "RS11 x Pinata",
-          "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
-          "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
-          "prix": 15,
-          "img": "/images/IMG_1600-1.jpeg"
-        },
-        {
           "nom": "Amnesia Haze",
           "desc": "Pour les amateurs de fleur, un gout universel et familier",
           "compo": "Acidule, bon gout floral",
@@ -50,6 +43,13 @@
           "compo": "..",
           "prix": 15,
           "img": "/images/IMG_1593.jpeg"
+        },
+        {
+          "nom": "Rs11 x pinata ",
+          "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
+          "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
+          "prix": 15,
+          "img": "/images/IMG_1600-2.jpeg"
         }
       ]
     }
