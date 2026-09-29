@@ -5,40 +5,189 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Formule Choice</title>
 <style>
-body { background: #05060a; color: #fff; font-family: sans-serif; padding: 20px; }
-h1 { color: #00f0ff; text-align: center; font-size: 2rem; }
-h2 { color: #ff2bd6; margin-top: 30px; border-bottom: 1px solid #ff2bd6; padding-bottom: 10px; }
-.plat { background: #0a0e17; border: 1px solid #00f0ff; padding: 15px; margin: 10px 0; border-radius: 10px; display: flex; justify-content: space-between; }
-.nom { font-weight: bold; color: #fff; }
-.prix { color: #00f0ff; font-weight: bold; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', 'Segoe UI', sans-serif; }
+  body { background: #05060a; color: #e0e0e0; line-height: 1.5; }
+  header { padding: 60px 20px 40px; text-align: center; }
+  header h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; line-height: 1.1; }
+  header h1 .cyan { color: #00f0ff; text-shadow: 0 0 20px #00f0ff88; }
+  header h1 .pink { color: #ff2bd6; text-shadow: 0 0 20px #ff2bd688; }
+  header p { margin-top: 15px; font-size: 0.9rem; letter-spacing: 2px; color: #888; text-transform: uppercase; }
+  .nav-cats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 20px auto 40px; max-width: 900px; padding: 0 15px; }
+  .nav-cats a { text-decoration: none; color: #ccc; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border: 1px solid #00f0ff44; transition: 0.3s; background: #0a0e17; }
+  .nav-cats a:hover { background: linear-gradient(90deg, #00f0ff, #ff2bd6); color: #000; border-color: transparent; box-shadow: 0 0 20px #00f0ff88; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+  .categorie { margin-bottom: 50px; }
+  .categorie h2 { font-size: 1.8rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+  .categorie h2::before { content: ""; width: 40px; height: 3px; background: linear-gradient(90deg, #00f0ff, #ff2bd6); border-radius: 2px; }
+  .categorie h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, #ff2bd6, transparent); }
+  .plats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .plat { background: #0a0e17; border: 1px solid #00f0ff55; border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+  .plat:hover { border-color: #ff2bd6; box-shadow: 0 0 25px #ff2bd644; transform: translateY(-3px); }
+  .plat img { width: 100%; height: 160px; object-fit: cover; background: #111; display: block; }
+  .plat-body { padding: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .plat-body h3 { font-size: 0.95rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #fff; }
+  .plat-prix { font-size: 1.1rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 10px #00f0ff88; white-space: nowrap; }
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: flex-end; z-index: 100; }
+  .modal.show { display: flex; }
+  .modal-wrapper { width: 100%; display: flex; justify-content: center; position: relative; }
+  .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-content img { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-body { padding: 25px; }
+  .modal-body h2 { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
+  .modal-body .modal-prix { font-size: 1.5rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 15px #00f0ff88; margin-bottom: 20px; }
+  .modal-body .label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #ff2bd6; margin-bottom: 8px; font-weight: 700; }
+  .modal-body .desc { font-size: 0.95rem; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
+  .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; z-index: 10; }
+  footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; border-top: 1px solid #ff2bd622; }
+  @media (max-width: 500px) {
+    header h1 { font-size: 1.9rem; }
+    .categorie h2 { font-size: 1.3rem; }
+    .plats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .plat img { height: 120px; }
+    .plat-body { padding: 10px; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .plat-body h3 { font-size: 0.75rem; }
+    .plat-prix { font-size: 0.9rem; }
+  }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>LA FORMULE CHOICE</h1>
-<div id="carte"></div>
+
+<header>
+  <h1><span class="cyan">LA FORMULE</span><br><span class="pink">CHOICE</span></h1>
+  <p>~ Notre Carte ~</p>
+</header>
+
+<div class="nav-cats" id="nav"></div>
+<div class="container" id="carte"></div>
+<footer>© 2025 La Formule Choice</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-wrapper">
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="">
+      <button class="modal-close" onclick="fermerModal()">X</button>
+      <div class="modal-body">
+        <h2 id="modal-nom"></h2>
+        <div class="modal-prix" id="modal-prix"></div>
+        <div class="label">Description</div>
+        <div class="desc" id="modal-desc"></div>
+        <div class="label">Composition</div>
+        <div class="desc" id="modal-compo"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-var menu = [
-  { cat: "Soft", nom: "O.G Kvsh", prix: 6.00 },
-  { cat: "Soft", nom: "3x Royal Gorilla", prix: 10.00 },
-  { cat: "Soft", nom: "RS11 x Pinata", prix: 15.00 },
-  { cat: "Soft", nom: "Amnesia Haze", prix: 10.00 },
-  { cat: "Hard", nom: "Static Marocain x2", prix: 10.00 }
-];
+  /* ================================================================
+     MODIFIE TA CARTE ICI
+     
+     Chaque produit ressemble a ca :
+     
+     {
+       nom: "Nom du produit",
+       desc: "Description courte",
+       compo: "Composition detaillee",
+       prix: 10.00,
+       img: "https://lien-de-ta-photo.jpg"
+     },
+     
+     REGLES IMPORTANTES :
+     - Garde les guillemets " " autour des textes
+     - Garde la virgule , a la fin de chaque produit
+     - Si pas de photo, laisse img: ""
+     - Pas d apostrophe dans le texte (ou remplace par un espace)
+     ================================================================ */
 
-var html = "";
-var catActuelle = "";
-for (var i = 0; i < menu.length; i++) {
-  var p = menu[i];
-  if (p.cat !== catActuelle) {
-    if (catActuelle !== "") html += "</div>";
-    html += "<h2>" + p.cat + "</h2><div>";
-    catActuelle = p.cat;
+  var menu = [
+    {
+      categorie: "Soft",
+      plats: [
+        {
+          nom: "Nom du produit 1",
+          desc: "Description courte ici",
+          compo: "Composition detaillee ici",
+          prix: 10.00,
+          img: ""
+        },
+        {
+          nom: "Nom du produit 2",
+          desc: "Description courte ici",
+          compo: "Composition detaillee ici",
+          prix: 12.00,
+          img: ""
+        }
+      ]
+    },
+    {
+      categorie: "Hard",
+      plats: [
+        {
+          nom: "Nom du produit 1",
+          desc: "Description courte ici",
+          compo: "Composition detaillee ici",
+          prix: 15.00,
+          img: ""
+        }
+      ]
+    }
+  ];
+
+  /* ================================================================
+     NE TOUCHE PAS EN DESSOUS
+     ================================================================ */
+
+  var PLACEHOLDER = "https://placehold.co/600x400/0a0e17/00f0ff?text=Photo";
+
+  var nav = document.getElementById("nav");
+  var carte = document.getElementById("carte");
+
+  var navHtml = "";
+  for (var i = 0; i < menu.length; i++) {
+    navHtml += "<a href='#cat-" + i + "'>" + menu[i].categorie + "</a>";
   }
-  html += "<div class='plat'><div class='nom'>" + p.nom + "</div><div class='prix'>" + p.prix.toFixed(2) + " EUR</div></div>";
-}
-if (catActuelle !== "") html += "</div>";
-document.getElementById("carte").innerHTML = html;
+  nav.innerHTML = navHtml;
+
+  var carteHtml = "";
+  for (var i = 0; i < menu.length; i++) {
+    var cat = menu[i];
+    carteHtml += "<section class='categorie' id='cat-" + i + "'>";
+    carteHtml += "<h2>" + cat.categorie + "</h2>";
+    carteHtml += "<div class='plats-grid'>";
+    for (var j = 0; j < cat.plats.length; j++) {
+      var p = cat.plats[j];
+      var imgSrc = p.img ? p.img : PLACEHOLDER;
+      carteHtml += "<div class='plat' onclick='ouvrirModal(" + i + "," + j + ")'>";
+      carteHtml += "<img src='" + imgSrc + "' alt='" + p.nom + "'>";
+      carteHtml += "<div class='plat-body'>";
+      carteHtml += "<h3>" + p.nom + "</h3>";
+      carteHtml += "<div class='plat-prix'>" + p.prix.toFixed(2) + " EUR</div>";
+      carteHtml += "</div></div>";
+    }
+    carteHtml += "</div></section>";
+  }
+  carte.innerHTML = carteHtml;
+
+  function ouvrirModal(i, j) {
+    var p = menu[i].plats[j];
+    document.getElementById("modal-img").src = p.img ? p.img : PLACEHOLDER;
+    document.getElementById("modal-nom").textContent = p.nom;
+    document.getElementById("modal-prix").textContent = p.prix.toFixed(2) + " EUR";
+    document.getElementById("modal-desc").textContent = p.desc;
+    document.getElementById("modal-compo").textContent = p.compo;
+    document.getElementById("modal").classList.add("show");
+  }
+
+  function fermerModal() {
+    document.getElementById("modal").classList.remove("show");
+  }
+
+  document.getElementById("modal").addEventListener("click", function(e) {
+    if (e.target.id === "modal") fermerModal();
+  });
 </script>
+
 </body>
 </html>
