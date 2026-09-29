@@ -6,34 +6,34 @@
         {
           "nom": "O.G Kvsh",
           "desc": "Naturel et vegetal, epice floral et terreux 4/10",
-          "compo": "OG Kush jaune Maroc",
-          "prix": 6.00
-          "img": "https://zupimages.net/up/26/39/k2nx.jpeg",
-          "video" : ""
+          "compo": "OG Kush Maroc",
+          "prix": 6.00,
+          "img": "/images/IMG_1600.jpeg",
+          "video": ""
         },
         {
           "nom": "3x Royal Gorilla",
           "desc": "Goutue et impactante 7/10",
           "compo": "Royal Gorilla",
           "prix": 10.00,
-          "img": "/images/IMG_1632.jpeg",
-          "video" : ""
+          "img": "/images/IMG_1598.jpeg",
+          "video": ""
         },
         {
           "nom": "RS11 x Pinata",
           "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
           "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
           "prix": 15.00,
-          "img": "/images/IMG_1600.jpeg",
-          "video" : ""
+          "img": "/images/IMG_1598.jpeg",
+          "video": ""
         },
         {
           "nom": "Amnesia Haze",
           "desc": "Pour les amateurs de fleur, un gout universel et familier",
           "compo": "Acidule, bon gout floral",
           "prix": 10.00,
-          "img": "/images/IMG_1598.jpeg",
-          "video" : ""
+          "img": "/images/IMG_1593.jpeg",
+          "video": ""
         }
       ]
     },
@@ -46,15 +46,15 @@
           "compo": "Static Marocain x2",
           "prix": 20.00,
           "img": "/images/IMG_1591.jpeg",
-          "video" : ""
+          "video": ""
         },
         {
           "nom": "Topicana cherry",
-          "desc": ".",
-          "compo": ".",
+          "desc": "..",
+          "compo": "..",
           "prix": 15.00,
           "img": "/images/IMG_1593.jpeg",
-          "video" : ""
+          "video": ""
         }
       ]
     }
