@@ -7,33 +7,30 @@
           "nom": "O.G Kvsh",
           "desc": "Naturel et vegetal, epice floral et terreux 4/10",
           "compo": "OG Kush Maroc",
-          "prix": 6.00,
+          "prix": 6,
           "img": "/images/IMG_1600.jpeg",
-          "video": "https://exemple.com/ma-video.mp4"
+          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/9789E7E9-9EC1-4CD2-B02C-5C09BF30B74B.mp4"
         },
         {
           "nom": "3x Royal Gorilla",
           "desc": "Goutue et impactante 7/10",
           "compo": "Royal Gorilla",
-          "prix": 10.00,
-          "img": "/images/IMG_1598.jpeg",
-          "video": ""
+          "prix": 10,
+          "img": "/images/IMG_1598.jpeg"
         },
         {
           "nom": "RS11 x Pinata",
           "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
           "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
-          "prix": 15.00,
-          "img": "/images/IMG_1598.jpeg",
-          "video": ""
+          "prix": 15,
+          "img": "/images/IMG_1598.jpeg"
         },
         {
           "nom": "Amnesia Haze",
           "desc": "Pour les amateurs de fleur, un gout universel et familier",
           "compo": "Acidule, bon gout floral",
-          "prix": 10.00,
-          "img": "/images/IMG_1593.jpeg",
-          "video": ""
+          "prix": 10,
+          "img": "/images/IMG_1593.jpeg"
         }
       ]
     },
@@ -44,17 +41,15 @@
           "nom": "Static Marocain x2",
           "desc": "Static marocain, qualite superieure",
           "compo": "Static Marocain x2",
-          "prix": 20.00,
-          "img": "/images/IMG_1591.jpeg",
-          "video": ""
+          "prix": 20,
+          "img": "/images/IMG_1591.jpeg"
         },
         {
           "nom": "Topicana cherry",
           "desc": "..",
           "compo": "..",
-          "prix": 15.00,
-          "img": "/images/IMG_1593.jpeg",
-          "video": ""
+          "prix": 15,
+          "img": "/images/IMG_1593.jpeg"
         }
       ]
     }
