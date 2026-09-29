@@ -9,7 +9,7 @@
           "compo": "OG Kush Maroc",
           "prix": 6.00,
           "img": "/images/IMG_1600.jpeg",
-          "video": ""
+          "video": "https://exemple.com/ma-video.mp4"
         },
         {
           "nom": "3x Royal Gorilla",
