@@ -30,9 +30,9 @@
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: flex-end; z-index: 100; }
   .modal.show { display: flex; }
   .modal-wrapper { width: 100%; display: flex; justify-content: center; position: relative; }
-  .modal-content img, .modal-content video { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  .modal-content img { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-content img, .modal-content video { width: 100%; height: 240px; object-fit: cover; display: block; }
   .modal-body { padding: 25px; }
   .modal-body h2 { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
   .modal-body .modal-prix { font-size: 1.5rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 15px #00f0ff88; margin-bottom: 20px; }
@@ -67,15 +67,15 @@
   <div class="modal-wrapper">
     <div class="modal-content">
       <img id="modal-img" src="" alt="">
-     <video id="modal-video" controls playsinline style="width:100%; height:240px; object-fit:cover; display:none; background:#000;"></video>
+      <video id="modal-video" controls playsinline style="width:100%; height:240px; object-fit:cover; display:none; background:#000;"></video>
       <button class="modal-close" onclick="fermerModal()">X</button>
       <div class="modal-body">
         <h2 id="modal-nom"></h2>
         <div class="modal-prix" id="modal-prix"></div>
         <div class="label">Description</div>
-        <div class="desc" id="modal-desc"></div>
-        <div class="label">Composition</div>
-        <div class="desc" id="modal-compo"></div>
+        <div class=" <desc" id="modal-desc"></divdiv>
+        <div class="label">Composition</ classdiv>
+       ="desc" id="modal-compo"></div>
       </div>
     </div>
   </div>
