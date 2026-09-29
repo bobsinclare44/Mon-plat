@@ -30,9 +30,10 @@
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: flex-end; z-index: 100; }
   .modal.show { display: flex; }
   .modal-wrapper { width: 100%; display: flex; justify-content: center; position: relative; }
-  .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
+  .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; position: relative; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  .modal-content img, .modal-content video { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-content img { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .modal-content video { width: 100%; max-height: 400px; display: block; background: #000; }
   .modal-body { padding: 25px; }
   .modal-body h2 { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
   .modal-body .modal-prix { font-size: 1.5rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 15px #00f0ff88; margin-bottom: 20px; }
@@ -67,15 +68,15 @@
   <div class="modal-wrapper">
     <div class="modal-content">
       <img id="modal-img" src="" alt="">
-      <video id="modal-video" controls playsinline style="width:100%; height:240px; object-fit:cover; display:none; background:#000;"></video>
+      <video id="modal-video" controls playsinline style="display:none;"></video>
       <button class="modal-close" onclick="fermerModal()">X</button>
       <div class="modal-body">
         <h2 id="modal-nom"></h2>
         <div class="modal-prix" id="modal-prix"></div>
         <div class="label">Description</div>
-        <div class=" <desc" id="modal-desc"></divdiv>
-        <div class="label">Composition</ classdiv>
-       ="desc" id="modal-compo"></div>
+        <div class="desc" id="modal-desc"></div>
+        <div class="label">Composition</div>
+        <div class="desc" id="modal-compo"></div>
       </div>
     </div>
   </div>
@@ -88,7 +89,7 @@
   fetch('/menu.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      menu = data.categories;
+      menu = data.categories || [];
       afficherCarte();
     })
     .catch(function(err) {
@@ -115,11 +116,12 @@
       for (j = 0; j < cat.produits.length; j++) {
         var p = cat.produits[j];
         var imgSrc = p.img ? p.img : PLACEHOLDER;
+        var prixAffiche = (p.prix !== undefined && p.prix !== null) ? Number(p.prix).toFixed(2) : "0.00";
         carteHtml += "<div class='plat' onclick='ouvrirModal(" + i + "," + j + ")'>";
         carteHtml += "<img src='" + imgSrc + "' alt='" + p.nom + "'>";
         carteHtml += "<div class='plat-body'>";
         carteHtml += "<h3>" + p.nom + "</h3>";
-        carteHtml += "<div class='plat-prix'>" + Number(p.prix).toFixed(2) + " EUR</div>";
+        carteHtml += "<div class='plat-prix'>" + prixAffiche + " EUR</div>";
         carteHtml += "</div></div>";
       }
       carteHtml += "</div></section>";
@@ -128,31 +130,50 @@
   }
 
   function ouvrirModal(i, j) {
-    var p = menu[i].produits[j];
-    var imgEl = document.getElementById('modal-img');
-    var videoEl = document.getElementById('modal-video');
+    try {
+      var p = menu[i].produits[j];
+      var imgEl = document.getElementById('modal-img');
+      var videoEl = document.getElementById('modal-video');
 
-    if (p.video && p.video !== "") {
-      imgEl.style.display = 'none';
-      videoEl.style.display = 'block';
-      videoEl.src = p.video;
-      videoEl.poster = p.img ? p.img : PLACEHOLDER;
-    } else {
-      videoEl.style.display = 'none';
-      videoEl.src = '';
-      imgEl.style.display = 'block';
-      imgEl.src = p.img ? p.img : PLACEHOLDER;
+      var hasVideo = (p.video && p.video !== "" && p.video !== null && p.video !== undefined);
+
+      if (hasVideo) {
+        if (imgEl) imgEl.style.display = 'none';
+        if (videoEl) {
+          videoEl.style.display = 'block';
+          videoEl.src = p.video;
+          videoEl.poster = p.img ? p.img : PLACEHOLDER;
+        }
+      } else {
+        if (videoEl) {
+          videoEl.style.display = 'none';
+          videoEl.removeAttribute('src');
+        }
+        if (imgEl) {
+          imgEl.style.display = 'block';
+          imgEl.src = p.img ? p.img : PLACEHOLDER;
+        }
+      }
+
+      var prixAffiche = (p.prix !== undefined && p.prix !== null) ? Number(p.prix).toFixed(2) : "0.00";
+
+      document.getElementById('modal-nom').textContent = p.nom || '';
+      document.getElementById('modal-prix').textContent = prixAffiche + " EUR";
+      document.getElementById('modal-desc').textContent = p.desc || '';
+      document.getElementById('modal-compo').textContent = p.compo || '';
+      document.getElementById('modal').classList.add('show');
+    } catch (e) {
+      alert('Erreur : ' + e.message);
     }
-
-    document.getElementById('modal-nom').textContent = p.nom;
-    document.getElementById('modal-prix').textContent = Number(p.prix).toFixed(2) + " EUR";
-    document.getElementById('modal-desc').textContent = p.desc;
-    document.getElementById('modal-compo').textContent = p.compo;
-    document.getElementById('modal').classList.add('show');
   }
 
   function fermerModal() {
     document.getElementById('modal').classList.remove('show');
+    var videoEl = document.getElementById('modal-video');
+    if (videoEl) {
+      videoEl.pause();
+      videoEl.currentTime = 0;
+    }
   }
 
   document.getElementById('modal').addEventListener('click', function(e) {
