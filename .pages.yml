@@ -36,3 +36,7 @@ content:
               - name: img
                 label: Photo
                 type: image
+              - name: video
+                label: Video (lien Cloudinary .mp4)
+                type: string
+                required: false
