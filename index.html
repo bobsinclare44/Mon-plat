@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Formule Choice</title>
+<style>
+body { background: #05060a; color: #fff; font-family: sans-serif; padding: 20px; }
+h1 { color: #00f0ff; text-align: center; font-size: 2rem; }
+h2 { color: #ff2bd6; margin-top: 30px; border-bottom: 1px solid #ff2bd6; padding-bottom: 10px; }
+.plat { background: #0a0e17; border: 1px solid #00f0ff; padding: 15px; margin: 10px 0; border-radius: 10px; display: flex; justify-content: space-between; }
+.nom { font-weight: bold; color: #fff; }
+.prix { color: #00f0ff; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>LA FORMULE CHOICE</h1>
+<div id="carte"></div>
+
+<script>
+var menu = [
+  { cat: "Soft", nom: "O.G Kvsh", prix: 6.00 },
+  { cat: "Soft", nom: "3x Royal Gorilla", prix: 10.00 },
+  { cat: "Soft", nom: "RS11 x Pinata", prix: 15.00 },
+  { cat: "Soft", nom: "Amnesia Haze", prix: 10.00 },
+  { cat: "Hard", nom: "Static Marocain x2", prix: 10.00 }
+];
+
+var html = "";
+var catActuelle = "";
+for (var i = 0; i < menu.length; i++) {
+  var p = menu[i];
+  if (p.cat !== catActuelle) {
+    if (catActuelle !== "") html += "</div>";
+    html += "<h2>" + p.cat + "</h2><div>";
+    catActuelle = p.cat;
+  }
+  html += "<div class='plat'><div class='nom'>" + p.nom + "</div><div class='prix'>" + p.prix.toFixed(2) + " EUR</div></div>";
+}
+if (catActuelle !== "") html += "</div>";
+document.getElementById("carte").innerHTML = html;
+</script>
+</body>
+</html>
