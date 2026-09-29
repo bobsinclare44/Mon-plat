@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accès protégé</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #05060a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  .box { background: #0a0e17; padding: 40px 30px; border-radius: 16px; border: 1px solid #00f0ff; text-align: center; width: 100%; max-width: 380px; box-shadow: 0 0 30px #00f0ff33; }
+  h1 { color: #00f0ff; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 2px; }
+  input { padding: 14px; font-size: 1rem; border-radius: 8px; border: 1px solid #00f0ff55; background: #111; color: #fff; width: 100%; margin-bottom: 15px; outline: none; }
+  input:focus { border-color: #ff2bd6; }
+  button { padding: 14px 20px; background: linear-gradient(90deg, #00f0ff, #ff2bd6); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; color: #000; font-size: 1rem; letter-spacing: 1px; }
+  .error { color: #ff4444; margin-top: 15px; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1>ACCES PROTEGE</h1>
+    <input type="password" id="pass" placeholder="Mot de passe" autofocus>
+    <button onclick="checkPass()">Entrer</button>
+    <p class="error" id="error"></p>
+  </div>
+<script>
+  async function checkPass() {
+    var pass = document.getElementById('pass').value;
+    var errorEl = document.getElementById('error');
+    errorEl.textContent = '';
+    try {
+      var res = await fetch('/check-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'password=' + encodeURIComponent(pass)
+      });
+      if (res.ok) {
+        window.location.href = '/';
+      } else {
+        errorEl.textContent = 'Mot de passe incorrect';
+      }
+    } catch (e) {
+      errorEl.textContent = 'Erreur de connexion';
+    }
+  }
+  document.getElementById('pass').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') checkPass();
+  });
+</script>
+</body>
+</html>
