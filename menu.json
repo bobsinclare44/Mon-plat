@@ -42,6 +42,13 @@
           "compo": "Static Marocain x2",
           "prix": 10,
           "img": "/images/IMG_1591.jpeg"
+        },
+        {
+          "nom": "Topicana cherry",
+          "desc": ".",
+          "compo": ".",
+          "prix": 12,
+          "img": "/images/IMG_1593.jpeg"
         }
       ]
     }
