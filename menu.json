@@ -1,1 +1,49 @@
- 
+ {
+  "categories": [
+    {
+      "nom": "Soft",
+      "produits": [
+        {
+          "nom": "O.G Kvsh",
+          "desc": "Naturel et vegetal, epice floral et terreux 4/10",
+          "compo": "OG Kush Maroc",
+          "prix": 6,
+          "img": "https://zupimages.net/up/26/39/k2nx.jpeg"
+        },
+        {
+          "nom": "3x Royal Gorilla",
+          "desc": "Goutue et impactante 7/10",
+          "compo": "Royal Gorilla",
+          "prix": 10,
+          "img": ""
+        },
+        {
+          "nom": "RS11 x Pinata",
+          "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
+          "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
+          "prix": 15,
+          "img": ""
+        },
+        {
+          "nom": "Amnesia Haze",
+          "desc": "Pour les amateurs de fleur, un gout universel et familier",
+          "compo": "Acidule, bon gout floral",
+          "prix": 10,
+          "img": ""
+        }
+      ]
+    },
+    {
+      "nom": "Hard",
+      "produits": [
+        {
+          "nom": "Static Marocain x2",
+          "desc": "Static marocain, qualite superieure",
+          "compo": "Static Marocain x2",
+          "prix": 10,
+          "img": ""
+        }
+      ]
+    }
+  ]
+}
