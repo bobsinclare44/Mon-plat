@@ -8,15 +8,15 @@
           "desc": "Naturel et vegetal, epice floral et terreux 4/10",
           "compo": "OG Kush Maroc",
           "prix": 6,
-          "img": "/images/IMG_1511.jpeg",
-          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/9789E7E9-9EC1-4CD2-B02C-5C09BF30B74B.mp4"
+          "img": "/images/IMG_1511.jpeg"
         },
         {
           "nom": "3x Royal Gorilla",
           "desc": "Goutue et impactante 7/10",
           "compo": "Royal Gorilla",
           "prix": 10,
-          "img": "/images/IMG_1632-1.jpeg"
+          "img": "/images/IMG_1644.jpeg",
+          "video": "https://player.cloudinary.com/embed/?cloud_name=i5s6m66m&public_id=C8B4F5ED-ADF7-4DAA-943B-13308A0BCAE3"
         },
         {
           "nom": "Amnesia Haze",
@@ -49,7 +49,7 @@
           "desc": "Finale propre, legerement poivree, avec une touche de baies foncees",
           "compo": "Croisement Pink Guava et OZK, 70% Indica / 30% Sativa",
           "prix": 15,
-          "img": "/images/IMG_1600-2.jpeg"
+          "img": "/images/IMG_1642.jpeg"
         }
       ]
     }
