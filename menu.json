@@ -54,6 +54,14 @@
           "prix": 15,
           "img": "/images/IMG_1655.jpeg",
           "video": "https://res.cloudinary.com/i5s6m66m/video/upload/11E76F2C-A9EF-4B94-8747-C93B2C6D63DC.mp4"
+        },
+        {
+          "nom": "grape soda",
+          "desc": "..",
+          "compo": "..",
+          "prix": 15,
+          "img": "/images/IMG_1657.jpeg",
+          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/83F123FE-ED91-42C1-A4F9-5C9280BEF590.mp4"
         }
       ]
     }
