@@ -2,7 +2,7 @@ export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
 
- if (url.pathname === '/login' || url.pathname === '/login.html' || url.pathname === '/check-password' || url.pathname === '/menu.json') {
+if (url.pathname === '/login' || url.pathname === '/login.html' || url.pathname === '/check-password' || url.pathname === '/menu.json' || url.pathname === '/ratings') {
     return next();
   }
 
