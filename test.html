@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test</title></head>
+<body style="background:#000;color:#fff;font-family:monospace;padding:20px;font-size:16px;">
+<h1>Diagnostic</h1>
+<div id="log"></div>
+<script>
+var log = document.getElementById('log');
+function print(msg) { log.innerHTML += '<p>' + msg + '</p>'; }
+
+print('1. JS démarre OK');
+
+fetch('/menu.json')
+  .then(function(r) {
+    print('2. menu.json -> status ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    print('3. menu.json OK : ' + data.categories.length + ' categories');
+    return fetch('/ratings');
+  })
+  .then(function(r) {
+    print('4. ratings -> status ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    print('5. ratings OK : ' + JSON.stringify(data));
+    print('=> TOUT MARCHE !');
+  })
+  .catch(function(err) {
+    print('ERREUR : ' + err.message);
+  });
+</script>
+</body>
+</html>
