@@ -26,6 +26,7 @@
   .plat-body { padding: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .plat-body h3 { font-size: 0.95rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #fff; }
   .plat-prix { font-size: 1.1rem; font-weight: 900; color: #00f0ff; text-shadow: 0 0 10px #00f0ff88; white-space: nowrap; }
+  .plat-avg { font-size: 0.75rem; color: #ffd700; margin-top: 4px; letter-spacing: 1px; }
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-end; z-index: 100; }
   .modal.show { display: flex; }
   .modal-content { background: #0a0e17; border: 1px solid #ff2bd6; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -37,6 +38,12 @@
   .modal-body .label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #ff2bd6; margin-bottom: 8px; font-weight: 700; }
   .modal-body .desc { font-size: 0.95rem; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
   .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; z-index: 10; }
+  .rating-stars { display: flex; gap: 6px; font-size: 1.8rem; margin-bottom: 8px; }
+  .rating-stars .star { cursor: pointer; color: #333; user-select: none; }
+  .rating-stars .star.filled { color: #ffd700; text-shadow: 0 0 12px #ffd70088; }
+  .rating-info { font-size: 0.8rem; color: #888; margin-bottom: 15px; letter-spacing: 1px; }
+  .rating-info .avg { color: #ffd700; font-weight: 700; }
+  .rating-thanks { color: #00f0ff; font-size: 0.85rem; margin-top: 8px; }
   footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; border-top: 1px solid #ff2bd622; }
   @media (max-width: 500px) {
     header h1 { font-size: 1.9rem; }
@@ -46,6 +53,7 @@
     .plat-body { padding: 10px; flex-direction: column; align-items: flex-start; gap: 4px; }
     .plat-body h3 { font-size: 0.75rem; }
     .plat-prix { font-size: 0.9rem; }
+    .rating-stars { font-size: 1.5rem; }
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -69,6 +77,10 @@
     <div class="modal-body">
       <h2 id="modal-nom"></h2>
       <div class="modal-prix" id="modal-prix"></div>
+      <div class="label">Note</div>
+      <div class="rating-stars" id="modal-stars"></div>
+      <div class="rating-info" id="modal-rating-info"></div>
+      <div class="rating-thanks" id="modal-thanks" style="display:none;">Merci pour votre vote !</div>
       <div class="label">Description</div>
       <div class="desc" id="modal-desc"></div>
       <div class="label">Composition</div>
@@ -80,16 +92,33 @@
 <script>
 var PLACEHOLDER = "https://placehold.co/600x400/0a0e17/00f0ff?text=Photo";
 var menu = [];
+var allRatings = {};
+var currentProductId = "";
 
 fetch("/menu.json")
   .then(function(r) { return r.json(); })
   .then(function(data) {
     menu = data.categories || [];
+    return fetch("/ratings");
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    allRatings = data || {};
     afficherCarte();
   })
   .catch(function(err) {
     document.getElementById("carte").innerHTML = "<p>Erreur : " + err.message + "</p>";
   });
+
+function moyenneProduit(id) {
+  if (allRatings[id] && allRatings[id].count > 0) {
+    return {
+      avg: (allRatings[id].total / allRatings[id].count).toFixed(1),
+      count: allRatings[id].count
+    };
+  }
+  return null;
+}
 
 function afficherCarte() {
   var nav = document.getElementById("nav");
@@ -112,16 +141,38 @@ function afficherCarte() {
       var p = cat.produits[j];
       var imgSrc = p.img ? p.img : PLACEHOLDER;
       var prix = Number(p.prix).toFixed(2);
+      var moy = moyenneProduit(p.nom);
+      var avgHtml = moy ? "<div class='plat-avg'>" + moy.avg + " / 5 (" + moy.count + ")</div>" : "";
       carteHtml += "<div class='plat' onclick='ouvrirModal(" + i + "," + j + ")'>";
       carteHtml += "<img src='" + imgSrc + "' alt='" + p.nom + "'>";
       carteHtml += "<div class='plat-body'>";
       carteHtml += "<h3>" + p.nom + "</h3>";
-      carteHtml += "<div class='plat-prix'>" + prix + " EUR</div>";
+      carteHtml += "<div><div class='plat-prix'>" + prix + " EUR</div>" + avgHtml + "</div>";
       carteHtml += "</div></div>";
     }
     carteHtml += "</div></section>";
   }
   carte.innerHTML = carteHtml;
+}
+
+function renderStars(container, avg, interactive) {
+  container.innerHTML = "";
+  for (var s = 1; s <= 5; s++) {
+    var span = document.createElement("span");
+    span.className = "star";
+    span.textContent = "★";
+    span.setAttribute("data-value", s);
+    if (avg && s <= Math.round(avg)) {
+      span.classList.add("filled");
+    }
+    if (interactive) {
+      span.onclick = function(e) {
+        var val = parseInt(e.target.getAttribute("data-value"), 10);
+        envoyerNote(val);
+      };
+    }
+    container.appendChild(span);
+  }
 }
 
 function ouvrirModal(i, j) {
@@ -146,7 +197,51 @@ function ouvrirModal(i, j) {
   document.getElementById("modal-prix").textContent = Number(p.prix).toFixed(2) + " EUR";
   document.getElementById("modal-desc").textContent = p.desc || "";
   document.getElementById("modal-compo").textContent = p.compo || "";
+
+  currentProductId = p.nom;
+
+  var moy = moyenneProduit(currentProductId);
+  var avg = moy ? parseFloat(moy.avg) : 0;
+
+  renderStars(document.getElementById("modal-stars"), avg, true);
+
+  var infoEl = document.getElementById("modal-rating-info");
+  if (moy) {
+    infoEl.innerHTML = "Moyenne : <span class='avg'>" + moy.avg + " / 5</span> (" + moy.count + " vote" + (moy.count > 1 ? "s" : "") + ")";
+  } else {
+    infoEl.textContent = "Aucun vote pour le moment";
+  }
+
+  document.getElementById("modal-thanks").style.display = "none";
   document.getElementById("modal").classList.add("show");
+}
+
+function envoyerNote(stars) {
+  fetch("/ratings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ productId: currentProductId, stars: stars })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.success) {
+      allRatings[currentProductId] = {
+        total: parseFloat(data.average) * data.count,
+        count: data.count
+      };
+      renderStars(document.getElementById("modal-stars"), parseFloat(data.average), false);
+      document.getElementById("modal-rating-info").innerHTML = "Moyenne : <span class='avg'>" + data.average + " / 5</span> (" + data.count + " vote" + (data.count > 1 ? "s" : "") + ")";
+      document.getElementById("modal-thanks").style.display = "block";
+      afficherCarte();
+    } else if (data.error === "Deja vote") {
+      alert("Vous avez deja vote pour ce produit.");
+    } else {
+      alert("Erreur lors du vote.");
+    }
+  })
+  .catch(function() {
+    alert("Erreur reseau.");
+  });
 }
 
 function fermerModal() {
