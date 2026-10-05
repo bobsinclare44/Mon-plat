@@ -221,9 +221,9 @@
 
       renderStars(document.getElementById('modal-stars'), avg, true);
 
-      vote var infoEl = document.getElementById('modal-rating-info');
+      var infoEl = document.getElementById('modal-rating-info');
       if (moy) {
-        infoEl.innerHTML = "Moyenne : <span class='avg'>" + moy.avg + " / 5</span> (" + moy.count + "" + (moy.count > 1 ? "s" : "") + ")";
+        infoEl.innerHTML = "Moyenne : <span class='avg'>" + moy.avg + " / 5</span> (" + moy.count + " vote" + (moy.count > 1 ? "s" : "") + ")";
       } else {
         infoEl.textContent = "Aucun vote pour le moment — soyez le premier !";
       }
