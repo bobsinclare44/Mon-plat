@@ -143,12 +143,14 @@ function afficherCarte() {
       var prix = Number(p.prix).toFixed(2);
       var moy = moyenneProduit(p.nom);
       var avgHtml = moy ? "<div class='plat-avg'>" + moy.avg + " / 5 (" + moy.count + ")</div>" : "";
-      carteHtml += "<div class='plat' onclick='ouvrirModal(" + i + "," + j + ")'>";
-      carteHtml += "<img src='" + imgSrc + "' alt='" + p.nom + "'>";
-      carteHtml += "<div class='plat-body'>";
-      carteHtml += "<h3>" + p.nom + "</h3>";
-      carteHtml += "<div><div class='plat-prix'>" + prix + " EUR</div>" + avgHtml + "</div>";
-      carteHtml += "</div></div>";
+      carteHtml +=
+  '<button type="button" class="plat" data-cat="' + i + '" data-prod="' + j + '">' +
+    '<img src="..." alt="...">' +
+    '<span class="plat-body">' +                    // span au lieu de div
+      '<span class="plat-nom">' + echapper(p.nom) + '</span>' +   // span au lieu de h3
+      '<span><span class="plat-prix">...</span></span>' +
+    '</span>' +
+  '</button>';
     }
     carteHtml += "</div></section>";
   }
