@@ -24,7 +24,8 @@
           "desc": "Pour les amateurs de fleur, un gout universel et familier",
           "compo": "Acidule, bon gout floral",
           "prix": 10,
-          "img": "/images/IMG_1598-1.jpeg"
+          "img": "/images/IMG_1598-1.jpeg",
+          "video": ""
         },
         {
           "nom": "Monster Cali mouss",
@@ -44,32 +45,8 @@
           "desc": "Static marocain, qualite superieure",
           "compo": "Static Marocain x2",
           "prix": 20,
-          "img": "/images/IMG_1646.jpeg",
-          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/F625F681-1119-4AE4-A827-0A2E7140BAA6.mp4"
-        },
-        {
-          "nom": "Orange groovye x tropicana cherry",
-          "desc": "..",
-          "compo": "..",
-          "prix": 15,
-          "img": "/images/IMG_1652-1.jpeg",
-          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/705CD36F-27AC-4A9F-A5B6-7D30247565A1.mp4"
-        },
-        {
-          "nom": "crunch berries",
-          "desc": "..",
-          "compo": "..",
-          "prix": 15,
-          "img": "/images/IMG_1655.jpeg",
-          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/11E76F2C-A9EF-4B94-8747-C93B2C6D63DC.mp4"
-        },
-        {
-          "nom": "grape soda",
-          "desc": "..",
-          "compo": "..",
-          "prix": 15,
-          "img": "/images/IMG_1657.jpeg",
-          "video": "https://res.cloudinary.com/i5s6m66m/video/upload/83F123FE-ED91-42C1-A4F9-5C9280BEF590.mp4"
+          "img": "/images/IMG_1591.jpeg",
+          "video": ""
         }
       ]
     }
